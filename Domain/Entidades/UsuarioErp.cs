@@ -17,4 +17,15 @@ public sealed class UsuarioErp : EmpresaBase
     public Usuario Usuario { get; private set; } = null!;
     public long UsuarioErpPerfilId { get; private set; }
     public UsuarioErpPerfil UsuarioErpPerfil { get; set; } = null!;
+
+    public static UsuarioErp Novo(long empresaId, long usuarioErpPerfilId, long usuarioId)
+    {
+        return new UsuarioErp(
+            0,
+            DateTime.UtcNow,
+            null,
+            empresaId,
+            usuarioErpPerfilId,
+            usuarioId);
+    }
 }

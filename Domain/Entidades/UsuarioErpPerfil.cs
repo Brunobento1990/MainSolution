@@ -1,3 +1,6 @@
+using Domain.EntidadeConfiguracoes;
+using Domain.Extensions;
+
 namespace Domain.Entidades;
 
 public class UsuarioErpPerfil : EmpresaBase
@@ -16,4 +19,15 @@ public class UsuarioErpPerfil : EmpresaBase
     public string Nome { get; private set; }
     public bool Ativo { get; private set; }
     public ICollection<UsuarioErpPerfilMenu> Menus { get; set; } = [];
+
+    public static UsuarioErpPerfil Novo(long empresaId, string nome)
+    {
+        return new UsuarioErpPerfil(
+            0,
+            DateTime.UtcNow,
+            null,
+            empresaId,
+            nome.Limitar(UsuarioErpPerfilConfiguracoes.NomeMaxLength),
+            true);
+    }
 }

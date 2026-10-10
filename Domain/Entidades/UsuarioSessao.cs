@@ -1,3 +1,6 @@
+using Domain.EntidadeConfiguracoes;
+using Domain.Extensions;
+
 namespace Domain.Entidades;
 
 public sealed class UsuarioSessao : EntidadeBase
@@ -31,4 +34,28 @@ public sealed class UsuarioSessao : EntidadeBase
     public string? SistemaOperacional { get; private set; }
     public string? Navegador { get; private set; }
     public string? Dispositivo { get; private set; }
+
+    public static UsuarioSessao Novo(
+        long usuarioId,
+        DateTime expiraEm,
+        string? enderecoIp,
+        string? userAgent,
+        string? sistemaOperacional,
+        string? navegador,
+        string? dispositivo)
+    {
+        return new UsuarioSessao(
+            0,
+            DateTime.UtcNow,
+            null,
+            usuarioId,
+            DateTime.UtcNow,
+            expiraEm,
+            null,
+            enderecoIp.LimitarOuNull(UsuarioSessaoConfiguracoes.EnderecoIpMaxLength),
+            userAgent.LimitarOuNull(UsuarioSessaoConfiguracoes.UserAgentMaxLength),
+            sistemaOperacional.LimitarOuNull(UsuarioSessaoConfiguracoes.SistemaOperacionalMaxLength),
+            navegador.LimitarOuNull(UsuarioSessaoConfiguracoes.NavegadorMaxLength),
+            dispositivo.LimitarOuNull(UsuarioSessaoConfiguracoes.DispositivoMaxLength));
+    }
 }

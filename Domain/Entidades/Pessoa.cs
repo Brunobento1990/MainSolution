@@ -1,3 +1,4 @@
+using Domain.EntidadeConfiguracoes;
 using Domain.Enuns;
 using Domain.Extensions;
 
@@ -28,4 +29,26 @@ public sealed class Pessoa : EmpresaBase
     public TipoDocumentoPessoaEnum TipoDocumento { get; private set; }
     public string? Telefone { get; private set; }
     public string? Email { get; private set; }
+
+    public static Pessoa Novo(
+        long empresaId,
+        string nome,
+        DateOnly? dataDeNascimento,
+        string? documento,
+        TipoDocumentoPessoaEnum tipoDocumento,
+        string? telefone,
+        string? email)
+    {
+        return new Pessoa(
+            0,
+            DateTime.UtcNow,
+            null,
+            empresaId,
+            nome.Limitar(PessoaConfiguracoes.NomeMaxLength),
+            dataDeNascimento,
+            documento.LimitarOuNull(PessoaConfiguracoes.DocumentoMaxLength),
+            tipoDocumento,
+            telefone.LimitarOuNull(PessoaConfiguracoes.TelefoneMaxLength),
+            email.LimitarOuNull(PessoaConfiguracoes.EmailMaxLength));
+    }
 }

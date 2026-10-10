@@ -1,4 +1,6 @@
+using Domain.EntidadeConfiguracoes;
 using Domain.Enuns;
+using Domain.Extensions;
 
 namespace Domain.Entidades;
 
@@ -29,4 +31,25 @@ public class UsuarioRecuperacaoDeSenha : EntidadeBase
     public DateTime? UtilizadoEm { get; private set; }
     public DateTime? RevogadoEm { get; private set; }
     public int Tentativas { get; private set; }
+
+    public static UsuarioRecuperacaoDeSenha Novo(
+        long usuarioId,
+        TipoRecuperacaoDeSenhaEnum tipo,
+        string token,
+        string destino,
+        DateTime expiraEm)
+    {
+        return new UsuarioRecuperacaoDeSenha(
+            0,
+            DateTime.UtcNow,
+            null,
+            usuarioId,
+            tipo,
+            token.Limitar(UsuarioRecuperacaoDeSenhaConfiguracoes.TokenMaxLength),
+            destino.Limitar(UsuarioRecuperacaoDeSenhaConfiguracoes.DestinoMaxLength),
+            expiraEm,
+            null,
+            null,
+            0);
+    }
 }

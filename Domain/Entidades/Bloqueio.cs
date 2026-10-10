@@ -1,3 +1,6 @@
+using Domain.EntidadeConfiguracoes;
+using Domain.Extensions;
+
 namespace Domain.Entidades;
 
 public sealed class Bloqueio : EntidadeBase
@@ -17,4 +20,18 @@ public sealed class Bloqueio : EntidadeBase
     public bool Ativo { get; private set; }
     public DateTime? DataHoraDesbloqueio { get; private set; }
     public DateTime? DataHoraExpiracao { get; private set; }
+
+    public static Bloqueio Novo(string motivo, DateTime? dataHoraExpiracao)
+    {
+        return new Bloqueio(
+            0,
+            DateTime.UtcNow,
+            null,
+            motivo.Limitar(BloqueioConfiguracoes.MotivoMaxLength),
+            true,
+            null)
+        {
+            DataHoraExpiracao = dataHoraExpiracao
+        };
+    }
 }

@@ -1,4 +1,6 @@
+using Domain.EntidadeConfiguracoes;
 using Domain.Enuns;
+using Domain.Extensions;
 
 namespace Domain.Entidades;
 
@@ -35,5 +37,30 @@ public sealed class Menu : EntidadeBase
     public bool EhDashboard
     {
         get => TipoMenu == TipoMenuEnum.Dashboard;
+    }
+
+    public static Menu Novo(
+        long? paiId,
+        string nome,
+        string? caminho,
+        string? icone,
+        int ordem,
+        Guid? empresaId,
+        TipoModuloEnum? tipoModulo,
+        TipoMenuEnum? tipoMenu)
+    {
+        return new Menu(
+            0,
+            DateTime.UtcNow,
+            null,
+            paiId,
+            nome.Limitar(MenuConfiguracoes.NomeMaxLength),
+            caminho.LimitarOuNull(MenuConfiguracoes.CaminhoMaxLength),
+            icone.LimitarOuNull(MenuConfiguracoes.IconeMaxLength),
+            ordem,
+            empresaId,
+            tipoModulo,
+            true,
+            tipoMenu);
     }
 }
