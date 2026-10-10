@@ -2,5 +2,5 @@ namespace Domain.Enuns;
 
 public enum TipoBloqueioUsuarioEnum
 {
-    TentativasLogin = 1,
+    TentativasLoginErroSenha = 1,
 }

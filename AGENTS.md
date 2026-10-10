@@ -14,3 +14,37 @@
 - O método `Novo` deve inicializar os campos controlados pela aplicação, como identificador padrão para geração pelo banco, data de cadastro, data de atualização e estado inicial da entidade.
 - Ao receber strings, o método `Novo` deve usar `Limitar` nos valores obrigatórios e `LimitarOuNull` nos valores opcionais.
 - Os tamanhos passados para `Limitar` e `LimitarOuNull` devem vir da classe correspondente em `Domain.EntidadeConfiguracoes`; não use valores numéricos literais.
+
+# Regras do projeto
+
+- Respeitar os padrões existentes.
+- Não gerar migrations sem autorização.
+- Não criar testes sem solicitação.
+- Não adicionar propriedades ou entidades sem necessidade.
+- Não modificar arquivos fora do escopo solicitado.
+- Na dúvida sobre uma regra de negócio, perguntar.
+- Não presumir que entidades semelhantes possuem as mesmas regras.
+
+# Identidade e autenticação
+
+Pessoa representa dados cadastrais.
+
+Usuario representa uma conta de autenticação.
+
+Uma Pessoa pode possuir múltiplos Usuarios,
+com credenciais independentes.
+
+UsuarioErp representa o vínculo de uma conta
+com o ERP de determinada empresa.
+
+Alterações cadastrais em Pessoa não devem
+modificar credenciais de Usuario.
+
+# Bloqueios
+
+Bloqueio é independente das entidades bloqueadas.
+
+UsuarioBloqueio associa o bloqueio ao usuário.
+
+Regras que determinam quando bloquear pertencem
+aos respectivos contextos de negócio.
