@@ -1,0 +1,52 @@
+name: mainsolution
+
+services:
+  postgres:
+    image: postgres:18
+    container_name: mainsolution-postgres
+    restart: unless-stopped
+    environment:
+      POSTGRES_DB: mainsolution
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+    ports:
+      - "5001:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql
+    networks:
+      - mainsolution_network
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U postgres -d mainsolution"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+      start_period: 10s
+
+  redis:
+    image: redis:7-alpine
+    container_name: mainsolution-redis
+    restart: unless-stopped
+    command: redis-server --appendonly yes
+    ports:
+      - "5002:6379"
+    volumes:
+      - redis_data:/data
+    networks:
+      - mainsolution_network
+    healthcheck:
+      test: ["CMD", "redis-cli", "ping"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+      start_period: 5s
+
+volumes:
+  postgres_data:
+    name: mainsolution-postgres-data
+  redis_data:
+    name: mainsolution-redis-data
+
+networks:
+  mainsolution_network:
+    name: mainsolution-network
+    driver: bridge

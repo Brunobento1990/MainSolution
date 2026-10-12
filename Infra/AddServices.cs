@@ -9,7 +9,7 @@ public static class AddServices
 {
     public static IServiceCollection AddContext(this IServiceCollection services, IConfiguration configuration)
     {
-        var connectionString = configuration.GetConnectionString("DefaultConnection");
+        var connectionString = configuration["ConnectionStrings:DefaultConnection"];
 
         services.AddDbContext<AppDbContext>(opt =>
             opt.UseNpgsql(connectionString, npgsql =>
