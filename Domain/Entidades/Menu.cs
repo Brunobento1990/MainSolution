@@ -10,7 +10,7 @@ public sealed class Menu : EntidadeBase
         long id,
         DateTime dataHoraCadastro,
         DateTime? dataHoraAtualizacao, long? paiId, string nome, string? caminho, string? icone, int ordem,
-        Guid? empresaId, TipoModuloEnum? tipoModulo, bool ativo, TipoMenuEnum? tipoMenu)
+        TipoModuloEnum? tipoModulo, bool ativo, TipoMenuEnum? tipoMenu)
         : base(id, dataHoraCadastro, dataHoraAtualizacao)
     {
         PaiId = paiId;
@@ -18,7 +18,6 @@ public sealed class Menu : EntidadeBase
         Caminho = caminho;
         Icone = icone;
         Ordem = ordem;
-        EmpresaId = empresaId;
         TipoModulo = tipoModulo;
         Ativo = ativo;
         TipoMenu = tipoMenu;
@@ -29,7 +28,6 @@ public sealed class Menu : EntidadeBase
     public string? Caminho { get; private set; }
     public string? Icone { get; private set; }
     public int Ordem { get; private set; }
-    public Guid? EmpresaId { get; private set; }
     public TipoModuloEnum? TipoModulo { get; private set; }
     public bool Ativo { get; private set; }
     public TipoMenuEnum? TipoMenu { get; private set; }
@@ -45,7 +43,6 @@ public sealed class Menu : EntidadeBase
         string? caminho,
         string? icone,
         int ordem,
-        Guid? empresaId,
         TipoModuloEnum? tipoModulo,
         TipoMenuEnum? tipoMenu)
     {
@@ -58,7 +55,6 @@ public sealed class Menu : EntidadeBase
             caminho.LimitarOuNull(MenuConfiguracoes.CaminhoMaxLength),
             icone.LimitarOuNull(MenuConfiguracoes.IconeMaxLength),
             ordem,
-            empresaId,
             tipoModulo,
             true,
             tipoMenu);

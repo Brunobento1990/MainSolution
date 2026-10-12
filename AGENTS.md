@@ -22,6 +22,9 @@
 - Não criar testes sem solicitação.
 - Não adicionar propriedades ou entidades sem necessidade.
 - Não modificar arquivos fora do escopo solicitado.
+- Não alterar referências entre projetos sem autorização explícita.
+- Para gerar uma migration, usar `dotnet ef migrations add {NomeDaMigration} --project Migrations --startup-project Api --context AppDbContext`; executar somente com autorização explícita.
+- Para aplicar migrations ao banco, usar `dotnet ef database update --project Migrations --startup-project Api --context AppDbContext`; executar somente com autorização explícita.
 - Na dúvida sobre uma regra de negócio, perguntar.
 - Não presumir que entidades semelhantes possuem as mesmas regras.
 
