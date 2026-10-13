@@ -28,6 +28,14 @@
 - Na dúvida sobre uma regra de negócio, perguntar.
 - Não presumir que entidades semelhantes possuem as mesmas regras.
 
+## Procedimento antes de alterar código
+
+- Reler este `AGENTS.md` no início de cada nova tarefa no repositório e antes de decisões arquiteturais.
+- Quando houver mais de uma interpretação possível, declarar a interpretação e pedir confirmação antes de editar arquivos.
+- Não preencher lacunas de regra de negócio por inferência, conveniência técnica ou semelhança com outro projeto.
+- Antes do build, revisar todas as alterações contra cada regra aplicável deste arquivo; corrigir as violações antes de continuar.
+- Ao corrigir um problema, revisar o fluxo completo afetado, não apenas o trecho apontado.
+
 # Identidade e autenticação
 
 Pessoa representa dados cadastrais.

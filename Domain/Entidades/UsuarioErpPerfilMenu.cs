@@ -17,4 +17,12 @@ public sealed class UsuarioErpPerfilMenu
     {
         return new UsuarioErpPerfilMenu(usuarioErpPerfilId, menuId);
     }
+
+    public static UsuarioErpPerfilMenu Novo(UsuarioErpPerfil usuarioErpPerfil, long menuId)
+    {
+        return new UsuarioErpPerfilMenu(usuarioErpPerfil.Id, menuId)
+        {
+            UsuarioErpPerfil = usuarioErpPerfil
+        };
+    }
 }

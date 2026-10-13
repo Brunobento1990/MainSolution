@@ -30,4 +30,12 @@ public class UsuarioErpPerfil : EmpresaBase
             nome.Limitar(UsuarioErpPerfilConfiguracoes.NomeMaxLength),
             true);
     }
+
+    public void AdicionarMenus(IEnumerable<long> menusIds)
+    {
+        foreach (var menuId in menusIds)
+        {
+            Menus.Add(UsuarioErpPerfilMenu.Novo(this, menuId));
+        }
+    }
 }

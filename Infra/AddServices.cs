@@ -1,4 +1,6 @@
+using Application.Repositories;
 using Data.Context;
+using Infra.Repositories;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -14,6 +16,8 @@ public static class AddServices
         services.AddDbContext<AppDbContext>(opt =>
             opt.UseNpgsql(connectionString, npgsql =>
                 npgsql.MigrationsAssembly("Migrations")));
+
+        services.AddScoped<ISelfServiceRepository, SelfServiceRepository>();
 
         return services;
     }

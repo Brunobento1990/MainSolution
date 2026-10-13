@@ -24,6 +24,7 @@ internal sealed class EmpresaConfiguracao : EntidadeBaseConfiguracao<Empresa>
             .IsRequired();
 
         builder.HasIndex(empresa => empresa.CpfCnpj)
+            .HasDatabaseName(EmpresaPersistenciaConfiguracoes.CpfCnpjIndiceUnicoNome)
             .IsUnique();
     }
 }

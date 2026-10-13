@@ -34,4 +34,19 @@ public sealed class Usuario : EntidadeBase
             senha.LimitarOuNull(UsuarioConfiguracoes.SenhaMaxLength),
             login.Limitar(UsuarioConfiguracoes.LoginMaxLength));
     }
+
+    public static Usuario Novo(Pessoa pessoa, string? senha, string login)
+    {
+        return new Usuario(
+            0,
+            DateTime.UtcNow,
+            null,
+            pessoa.Id,
+            true,
+            senha.LimitarOuNull(UsuarioConfiguracoes.SenhaMaxLength),
+            login.Limitar(UsuarioConfiguracoes.LoginMaxLength))
+        {
+            Pessoa = pessoa
+        };
+    }
 }
