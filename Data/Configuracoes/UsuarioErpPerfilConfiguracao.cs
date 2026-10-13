@@ -20,5 +20,12 @@ internal sealed class UsuarioErpPerfilConfiguracao : EmpresaBaseConfiguracao<Usu
 
         builder.HasIndex(perfil => new { perfil.EmpresaId, perfil.Nome })
             .IsUnique();
+
+        builder.HasAlternateKey(perfil => new { perfil.Id, perfil.EmpresaId });
+
+        builder.HasOne<Empresa>()
+            .WithMany()
+            .HasForeignKey(perfil => perfil.EmpresaId)
+            .OnDelete(DeleteBehavior.Restrict);
     }
 }

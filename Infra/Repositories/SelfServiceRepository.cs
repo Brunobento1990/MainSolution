@@ -25,15 +25,6 @@ public sealed class SelfServiceRepository : ISelfServiceRepository
             cancellationToken);
     }
 
-    public Task<bool> ExisteUsuarioErpAsync(
-        string login,
-        CancellationToken cancellationToken = default)
-    {
-        return _context.UsuariosErp.AnyAsync(
-            usuarioErp => usuarioErp.Usuario.Login == login,
-            cancellationToken);
-    }
-
     public async Task<IReadOnlyCollection<long>> ObterMenusAtivosIdsAsync(
         CancellationToken cancellationToken = default)
     {

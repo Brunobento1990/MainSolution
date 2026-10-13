@@ -5,7 +5,7 @@ using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
 namespace Data.Configuracoes;
 
-internal sealed class UsuarioConfiguracao : EntidadeBaseConfiguracao<Usuario>
+internal sealed class UsuarioConfiguracao : EmpresaBaseConfiguracao<Usuario>
 {
     public override void Configure(EntityTypeBuilder<Usuario> builder)
     {
@@ -25,9 +25,12 @@ internal sealed class UsuarioConfiguracao : EntidadeBaseConfiguracao<Usuario>
         builder.HasIndex(usuario => usuario.Login);
         builder.HasIndex(usuario => new { usuario.Login, usuario.Ativo });
 
+        builder.HasAlternateKey(usuario => new { usuario.Id, usuario.EmpresaId });
+
         builder.HasOne(usuario => usuario.Pessoa)
             .WithMany()
-            .HasForeignKey(usuario => usuario.PessoaId)
+            .HasForeignKey(usuario => new { usuario.PessoaId, usuario.EmpresaId })
+            .HasPrincipalKey(pessoa => new { pessoa.Id, pessoa.EmpresaId })
             .OnDelete(DeleteBehavior.Restrict);
     }
 }

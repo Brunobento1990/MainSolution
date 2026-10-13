@@ -33,6 +33,13 @@ internal sealed class PessoaConfiguracao : EmpresaBaseConfiguracao<Pessoa>
         builder.HasIndex(pessoa => new { pessoa.EmpresaId, pessoa.Documento })
             .IsUnique();
 
+        builder.HasAlternateKey(pessoa => new { pessoa.Id, pessoa.EmpresaId });
+
+        builder.HasOne<Empresa>()
+            .WithMany()
+            .HasForeignKey(pessoa => pessoa.EmpresaId)
+            .OnDelete(DeleteBehavior.Restrict);
+
         builder.Ignore(pessoa => pessoa.Idade);
     }
 }

@@ -34,11 +34,6 @@ internal sealed class SelfServiceService : ISelfServiceService
             erros.Add(EmpresaConfiguracoes.ErroCpfCnpjDuplicado);
         }
 
-        if (await _repository.ExisteUsuarioErpAsync(dto.Email, cancellationToken))
-        {
-            erros.Add(UsuarioErpConfiguracoes.ErroLoginDuplicado);
-        }
-
         if (erros.Count > 0)
         {
             return new CadastrarEmpresaSelfServiceResultado { Erros = erros };

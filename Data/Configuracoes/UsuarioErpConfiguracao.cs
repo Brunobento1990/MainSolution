@@ -15,12 +15,14 @@ internal sealed class UsuarioErpConfiguracao : EmpresaBaseConfiguracao<UsuarioEr
 
         builder.HasOne(usuarioErp => usuarioErp.Usuario)
             .WithMany()
-            .HasForeignKey(usuarioErp => usuarioErp.UsuarioId)
+            .HasForeignKey(usuarioErp => new { usuarioErp.UsuarioId, usuarioErp.EmpresaId })
+            .HasPrincipalKey(usuario => new { usuario.Id, usuario.EmpresaId })
             .OnDelete(DeleteBehavior.Restrict);
 
         builder.HasOne(usuarioErp => usuarioErp.UsuarioErpPerfil)
             .WithMany()
-            .HasForeignKey(usuarioErp => usuarioErp.UsuarioErpPerfilId)
+            .HasForeignKey(usuarioErp => new { usuarioErp.UsuarioErpPerfilId, usuarioErp.EmpresaId })
+            .HasPrincipalKey(perfil => new { perfil.Id, perfil.EmpresaId })
             .OnDelete(DeleteBehavior.Restrict);
     }
 }

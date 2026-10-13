@@ -27,6 +27,7 @@
 - Para aplicar migrations ao banco, usar `dotnet ef database update --project Migrations --startup-project Api --context AppDbContext`; executar somente com autorização explícita.
 - Na dúvida sobre uma regra de negócio, perguntar.
 - Não presumir que entidades semelhantes possuem as mesmas regras.
+- Ao consolidar uma regra importante de domínio, modelagem ou arquitetura durante uma tarefa, atualizar este `AGENTS.md` no mesmo trabalho para registrar a decisão.
 
 ## Procedimento antes de alterar código
 
@@ -50,6 +51,27 @@ com o ERP de determinada empresa.
 
 Alterações cadastrais em Pessoa não devem
 modificar credenciais de Usuario.
+
+## Consistência de empresa
+
+- Todo `Usuario` pertence a uma única `Empresa` e deve possuir `EmpresaId`.
+- O `EmpresaId` de `Usuario` deve ser o mesmo da `Pessoa` associada.
+- O `EmpresaId` de `UsuarioErp` deve ser o mesmo de seu `Usuario` e de seu `UsuarioErpPerfil`.
+- Essas invariáveis devem ser garantidas no banco por chaves estrangeiras compostas que incluam `EmpresaId`; não depender apenas de validações dos serviços.
+- `Pessoa.EmpresaId` e `UsuarioErpPerfil.EmpresaId` devem possuir chave estrangeira direta para `Empresa.Id`, com exclusão restrita.
+- Não configurar automaticamente uma chave estrangeira para `Empresa` em toda entidade derivada de `EmpresaBase`; relacionamentos com `Empresa` devem ser definidos explicitamente conforme a regra de cada entidade.
+- As entidades principais dos relacionamentos compostos devem possuir chave alternativa por `{Id, EmpresaId}`.
+- Estado inativo não permite inconsistência de empresa; `Ativo` não participa das chaves que garantem essas invariáveis.
+
+## Login por contexto
+
+- A autenticação deve partir da entidade de vínculo do contexto, e não diretamente de `Usuario`.
+- O login do ERP deve consultar `UsuarioErp` como entidade raiz e, por meio dela, acessar `Usuario`, `Pessoa`, `Empresa`, `UsuarioErpPerfil` e os menus permitidos.
+- A empresa do login ERP é determinada pelo vínculo `UsuarioErp`; não deve ser selecionada ou inferida diretamente a partir de `Usuario`.
+- `Usuario` armazena a conta e suas credenciais, mas não determina isoladamente em qual contexto a conta pode entrar.
+- Cada contexto deve possuir entidade de vínculo, fluxo e endpoint de login próprios. Por exemplo, o futuro endpoint `/ecommerce/login` deverá autenticar a partir de `UsuarioEcommerce`.
+- Não reutilizar automaticamente no ERP regras de login, perfis, permissões, bloqueios ou dados de retorno pertencentes a outro contexto.
+- O retorno do login ERP deve ser montado a partir do vínculo `UsuarioErp` e pode conter os dados da empresa, usuário, pessoa, perfil e menus autorizados desse vínculo.
 
 # Bloqueios
 
