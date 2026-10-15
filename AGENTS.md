@@ -73,6 +73,20 @@ modificar credenciais de Usuario.
 - Não reutilizar automaticamente no ERP regras de login, perfis, permissões, bloqueios ou dados de retorno pertencentes a outro contexto.
 - O retorno do login ERP deve ser montado a partir do vínculo `UsuarioErp` e pode conter os dados da empresa, usuário, pessoa, perfil e menus autorizados desse vínculo.
 
+## Geração do token JWT
+
+- A validade do JWT é independente da validade de `UsuarioSessao`.
+- A expiração do JWT deve ser calculada em minutos a partir de `Jwt:ExpiracaoEmMinutos`, com valor padrão de 60 minutos.
+- Emissor, audiência, chave e expiração devem ser obtidos por `IConfiguration`, injetada pela DI, com os valores padrão definidos na configuração do JWT.
+- `ValidateIssuer` e `ValidateAudience` devem ser obtidos por `IConfiguration`, com valor padrão `true`; não devem ser fixados diretamente nos parâmetros de validação.
+- O algoritmo de assinatura deve ser `HmacSha256`.
+- O JWT deve conter apenas a claim `UsuarioSessaoId`.
+- A geração deve continuar exposta por `IGeradorTokenAcesso` e sua implementação deve ser registrada como `Scoped`.
+- A validação do JWT deve retornar `Resultado<ValidacaoJwtModel>` e nunca propagar exceções esperadas de token inválido, malformado ou expirado.
+- Um JWT expirado deve produzir um resultado de sucesso com `Expirado` igual a `true`; a validação opcional sem tempo de vida deve permitir recuperar o `UsuarioSessaoId` desse token.
+- A geração e a validação devem compartilhar a leitura das configurações e a criação da chave de assinatura, sem duplicar essa lógica.
+- Extensões reutilizáveis de `IConfiguration` devem permanecer em `Domain.Extensions`.
+
 # Bloqueios
 
 Bloqueio é independente das entidades bloqueadas.
