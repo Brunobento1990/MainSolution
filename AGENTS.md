@@ -15,6 +15,17 @@
 - Ao receber strings, o método `Novo` deve usar `Limitar` nos valores obrigatórios e `LimitarOuNull` nos valores opcionais.
 - Os tamanhos passados para `Limitar` e `LimitarOuNull` devem vir da classe correspondente em `Domain.EntidadeConfiguracoes`; não use valores numéricos literais.
 
+## Repositórios
+
+- Repositórios não devem receber `Func`, `Expression<Func<...>>`, `IQueryable` ou predicados de consulta definidos pelos services.
+- As regras de acesso, filtros e composições das consultas devem permanecer encapsuladas na implementação do repositório.
+- Services devem chamar métodos de consulta explícitos, com parâmetros que representem o caso de uso.
+- O repositório genérico deve permanecer restrito às operações comuns de persistência, como `AddAsync`, `Update` e `SaveChangesAsync`; consultas específicas devem ser declaradas em repositórios específicos.
+
+## Testes
+
+- Quando o mesmo comportamento puder ser validado com diferentes parâmetros, preferir testes parametrizados com `[Theory]`; usar `[InlineData]` quando os dados forem simples.
+
 # Regras do projeto
 
 - Respeitar os padrões existentes.
@@ -27,7 +38,10 @@
 - Para aplicar migrations ao banco, usar `dotnet ef database update --project Migrations --startup-project Api --context AppDbContext`; executar somente com autorização explícita.
 - Na dúvida sobre uma regra de negócio, perguntar.
 - Não presumir que entidades semelhantes possuem as mesmas regras.
-- Ao consolidar uma regra importante de domínio, modelagem ou arquitetura durante uma tarefa, atualizar este `AGENTS.md` no mesmo trabalho para registrar a decisão.
+- Evitar lançar exceções explicitamente para controle de fluxo ou validações esperadas; retornar resultados de erro conforme os padrões do projeto.
+- Não chamar `cancellationToken.ThrowIfCancellationRequested()` explicitamente.
+- Todo parâmetro `CancellationToken` deve possuir valor padrão, usando `CancellationToken cancellationToken = default`.
+- Ao identificar ou consolidar um padrão, regra ou decisão que ainda não esteja registrado, solicitar autorização explícita do usuário antes de alterar este `AGENTS.md`.
 
 ## Procedimento antes de alterar código
 

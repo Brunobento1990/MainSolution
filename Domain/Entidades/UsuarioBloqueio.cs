@@ -34,4 +34,21 @@ public sealed class UsuarioBloqueio : EntidadeBase
             tipoBloqueio,
             bloqueioId);
     }
+
+    public static UsuarioBloqueio Novo(
+        long usuarioId,
+        TipoBloqueioUsuarioEnum tipoBloqueio,
+        Bloqueio bloqueio)
+    {
+        return new UsuarioBloqueio(
+            0,
+            DateTime.UtcNow,
+            null,
+            usuarioId,
+            tipoBloqueio,
+            bloqueio.Id)
+        {
+            Bloqueio = bloqueio
+        };
+    }
 }

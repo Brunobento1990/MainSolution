@@ -11,7 +11,9 @@ public static class InjecaoDeDependencia
 {
     public static IServiceCollection AddApplication(this IServiceCollection services)
     {
+        services.AddScoped<IAutenticaUsuarioService, AutenticaUsuarioService>();
         services.AddScoped<IGeradorTokenAcesso, GeradorTokenAcessoJwt>();
+        services.AddScoped<ILoginErpService, LoginErpService>();
         services.AddScoped<ISelfServiceService, SelfServiceService>();
         services.AddScoped<IUsuarioLogado, UsuarioLogado>();
 

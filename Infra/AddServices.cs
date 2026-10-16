@@ -17,7 +17,10 @@ public static class AddServices
             opt.UseNpgsql(connectionString, npgsql =>
                 npgsql.MigrationsAssembly("Migrations")));
 
+        services.AddScoped<ILoginRepository, LoginRepository>();
         services.AddScoped<ISelfServiceRepository, SelfServiceRepository>();
+        services.AddScoped<IUsuarioBloqueioRepository, UsuarioBloqueioRepository>();
+        services.AddScoped<IUsuarioTentativaLoginRepository, UsuarioTentativaLoginRepository>();
 
         return services;
     }

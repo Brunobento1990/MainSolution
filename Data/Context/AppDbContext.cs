@@ -20,6 +20,7 @@ public class AppDbContext : DbContext
     public DbSet<UsuarioErpPerfilMenu> UsuarioErpPerfilMenus => Set<UsuarioErpPerfilMenu>();
     public DbSet<UsuarioRecuperacaoDeSenha> UsuarioRecuperacoesDeSenha => Set<UsuarioRecuperacaoDeSenha>();
     public DbSet<UsuarioSessao> UsuarioSessoes => Set<UsuarioSessao>();
+    public DbSet<UsuarioTentativaLogin> UsuarioTentativasLogin => Set<UsuarioTentativaLogin>();
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {

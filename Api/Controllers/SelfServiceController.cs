@@ -23,7 +23,7 @@ public sealed class SelfServiceController : ControllerBase
     [ProducesResponseType<CadastrarEmpresaSelfServiceResultado>(StatusCodes.Status400BadRequest)]
     public async Task<IActionResult> CadastrarEmpresa(
         [FromBody] CadastrarEmpresaSelfServiceDTO dto,
-        CancellationToken cancellationToken)
+        CancellationToken cancellationToken = default)
     {
         var resultado = await _selfServiceService.CadastrarEmpresaAsync(dto, cancellationToken);
 
